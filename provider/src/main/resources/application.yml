@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: service-provider
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册中心
+        server-addr: ******:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://******:3306/miaosha?userUnicode=true&characterEncoding=UTF8&useSSL=false&useAffectedRows=true&useLegacyDatetimeCode=false&serverTimezone=CTT&useJDBCCompliantTimezoneShift=true
+    username: root
+    password: 8888.
+    hikari:
+      maximum-pool-size: 100
+      minimum-idle: 10
+      connection-timeout: 10000
+      auto-commit: false
+  redis:
+    host: *******
+    port: 6339
+    password: ****
+    expire: 10000
+    jedis:
+      pool:
+        max-wait: 1000
+        max-active: 1000
+        max-idle: 200
+        min-idle: 10
+management:
+  # 端点检查（健康检查）
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 8070
+logging:
+  level:
+    org.spring.cloud.alibaba.study.mapper: info
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath*:mapper/*.xml
+
+
+
+

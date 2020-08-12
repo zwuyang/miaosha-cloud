@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: service-provider-config
+  cloud:
+    nacos:
+      config:
+        server-addr: *.*.*.*:8848
+        file-extension: yml

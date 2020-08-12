@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.cloud.alibaba.study.mapper.MiaoshaGoodsMapper">
+  <resultMap id="BaseResultMap" type="org.spring.cloud.alibaba.study.entity.MiaoshaGoods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="miaosha_price" jdbcType="DECIMAL" property="miaoshaPrice" />
+    <result column="stock_count" jdbcType="INTEGER" property="stockCount" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+  </resultMap>
+
+  <resultMap id="GoodsDtoResultMap" type="org.spring.cloud.alibaba.study.dto.MSGoodsDto">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="miaosha_price" jdbcType="DECIMAL" property="msPrice"/>
+    <result column="stock_count" jdbcType="INTEGER" property="stockCount"/>
+    <result column="start_date" jdbcType="DATE" property="startTime"/>
+    <result column="end_date" jdbcType="DATE" property="endTime"/>
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_title" jdbcType="VARCHAR" property="goodsTitle" />
+    <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+    <result column="goods_detail" jdbcType="VARCHAR" property="goodsDetail" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, goods_id, miaosha_price, stock_count, start_date, end_date
+  </sql>
+
+  <select id="getAllMiaoShaGoods" resultMap="GoodsDtoResultMap">
+        select mg.miaosha_price, mg.stock_count, mg.start_date, mg.end_date, g.*
+        from miaosha_goods mg left join goods g on mg.goods_id = g.id;
+    </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from miaosha_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from miaosha_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.spring.cloud.alibaba.study.entity.MiaoshaGoods" useGeneratedKeys="true">
+    insert into miaosha_goods (goods_id, miaosha_price, stock_count, 
+      start_date, end_date)
+    values (#{goodsId,jdbcType=BIGINT}, #{miaoshaPrice,jdbcType=DECIMAL}, #{stockCount,jdbcType=INTEGER}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.spring.cloud.alibaba.study.entity.MiaoshaGoods" useGeneratedKeys="true">
+    insert into miaosha_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="miaoshaPrice != null">
+        miaosha_price,
+      </if>
+      <if test="stockCount != null">
+        stock_count,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="miaoshaPrice != null">
+        #{miaoshaPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stockCount != null">
+        #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.alibaba.study.entity.MiaoshaGoods">
+    update miaosha_goods
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="miaoshaPrice != null">
+        miaosha_price = #{miaoshaPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stockCount != null">
+        stock_count = #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.spring.cloud.alibaba.study.entity.MiaoshaGoods">
+    update miaosha_goods
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      miaosha_price = #{miaoshaPrice,jdbcType=DECIMAL},
+      stock_count = #{stockCount,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册中心
+        server-addr: *.*.*.*:8848
+  application:
+    name: service-consumer
+management:
+  # 端点检查（健康检查）
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 8080
+
+
+
+
+
