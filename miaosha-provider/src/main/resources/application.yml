@@ -8,18 +8,18 @@ spring:
         server-addr: ******:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://******:3306/miaosha?userUnicode=true&characterEncoding=UTF8&useSSL=false&useAffectedRows=true&useLegacyDatetimeCode=false&serverTimezone=CTT&useJDBCCompliantTimezoneShift=true
+    url: jdbc:mysql://******:3306/rds?userUnicode=true&characterEncoding=UTF8&useSSL=false&useAffectedRows=true&useLegacyDatetimeCode=false&serverTimezone=CTT&useJDBCCompliantTimezoneShift=true
     username: root
-    password: 8888.
+    password: ******.
     hikari:
       maximum-pool-size: 100
       minimum-idle: 10
       connection-timeout: 10000
       auto-commit: false
   redis:
-    host: *******
-    port: 6339
-    password: ****
+    host: ******
+    port: 63379
+    password: *****
     expire: 10000
     jedis:
       pool:

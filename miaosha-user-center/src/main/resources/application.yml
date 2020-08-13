@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: user-center-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://******:3306/rds?userUnicode=true&characterEncoding=UTF8&useSSL=false&useAffectedRows=true&useLegacyDatetimeCode=false&serverTimezone=CTT&useJDBCCompliantTimezoneShift=true
+    username: root
+    password: ******.
+    hikari:
+      maximum-pool-size: 100
+      minimum-idle: 10
+      connection-timeout: 10000
+      auto-commit: false
+  redis:
+    host: ******
+    port: 63379
+    password: ******
+    expire: 10000
+    jedis:
+      pool:
+        max-wait: 1000
+        max-active: 1000
+        max-idle: 200
+        min-idle: 10
+server:
+  port: 8080
+logging:
+  level:
+    org.spring.cloud.alibaba.study.mapper: info
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath*:mapper/*.xml
