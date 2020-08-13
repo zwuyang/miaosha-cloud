@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.spring.cloud.alibaba.study.mapper.MiaoshaUserMapper">
   <resultMap id="BaseResultMap" type="org.spring.cloud.alibaba.study.entity.MiaoshaUser">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
@@ -20,15 +20,15 @@
     from miaosha_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from miaosha_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.spring.cloud.alibaba.study.entity.MiaoshaUser" useGeneratedKeys="true">
-    insert into miaosha_user (nickname, `password`, salt, 
+    insert into miaosha_user (id,nickname, `password`, salt,
       head, register_date, last_login_date, 
       login_count)
-    values (#{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+    values (#{id},#{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR},
       #{head,jdbcType=VARCHAR}, #{registerDate,jdbcType=TIMESTAMP}, #{lastLoginDate,jdbcType=TIMESTAMP}, 
       #{loginCount,jdbcType=INTEGER})
   </insert>
@@ -120,7 +120,10 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="getByNickName" resultMap="BaseResultMap">
+  <select id="getByNickName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from miaosha_user where nickname = #{nickname}
+  </select>
+  <select id="getUsedUserNames" resultType="java.lang.String">
+    select nickname from miaosha_user;
   </select>
 </mapper>
