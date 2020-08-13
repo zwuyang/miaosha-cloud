@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.study</groupId>
-    <artifactId>consumer</artifactId>
+    <artifactId>miaosha-consumer</artifactId>
     <version>1.0</version>
 
     <description>消费者</description>
