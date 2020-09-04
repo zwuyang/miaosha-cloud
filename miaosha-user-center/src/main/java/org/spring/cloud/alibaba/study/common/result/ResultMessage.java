@@ -32,6 +32,14 @@ public class ResultMessage<T> extends AbstractResult implements Serializable {
         super(statusEnum);
     }
 
+    public ResultMessage(StatusEnum statusEnum, String msg) {
+        super(statusEnum, msg);
+    }
+
+    public ResultMessage(int code, String msg){
+        super(code, msg);
+    }
+
 
     static enum ResultMessageEnum{
         INSTANCE;
@@ -52,6 +60,12 @@ public class ResultMessage<T> extends AbstractResult implements Serializable {
         return ResultMessageEnum.INSTANCE.getInstance();
     }
 
+    public static ResultMessage ERROR(){
+        return new ResultMessage(StatusEnum.FAILED);
+    }
 
+    public static ResultMessage ERROR(String msg){
+        return new ResultMessage(StatusEnum.FAILED, msg);
+    }
 
 }

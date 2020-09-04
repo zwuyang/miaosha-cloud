@@ -17,6 +17,11 @@ public class AbstractResult{
     private int code;
     private String msg;
 
+    protected AbstractResult(int code, String msg){
+        this.msg = msg;
+        this.code = code;
+    }
+
     protected AbstractResult(StatusEnum statusEnum, int code, String msg){
         this.code = code;
         this.statusEnum = statusEnum;
@@ -27,6 +32,12 @@ public class AbstractResult{
         this.statusEnum = statusEnum;
         this.code = statusEnum.getCode();
         this.msg = statusEnum.getMsg();
+    }
+
+    public AbstractResult(StatusEnum statusEnum, String msg) {
+        this.statusEnum = statusEnum;
+        this.msg = msg;
+        this.code = statusEnum.getCode();
     }
 
     public static boolean isSuccess(AbstractResult result){

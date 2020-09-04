@@ -1,5 +1,7 @@
 package org.spring.cloud.alibaba.study.redis.key;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author yzw
  * @Classname BasePrefix
@@ -16,6 +18,8 @@ public class BasePrefix implements KeyPrefix{
         this.expireSeconds = expireSeconds;
         this.prefix = prefix;
     }
+
+
 
     public BasePrefix(String prefix) {
         this(0,prefix);

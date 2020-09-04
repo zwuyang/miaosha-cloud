@@ -14,15 +14,15 @@
   <sql id="Base_Column_List">
     id, nickname, `password`, salt, head, register_date, last_login_date, login_count
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from miaosha_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from miaosha_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.spring.cloud.alibaba.study.entity.MiaoshaUser" useGeneratedKeys="true">
     insert into miaosha_user (id,nickname, `password`, salt,

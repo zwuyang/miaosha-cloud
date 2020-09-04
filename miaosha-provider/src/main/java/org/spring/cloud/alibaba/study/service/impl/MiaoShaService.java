@@ -1,16 +1,17 @@
 package org.spring.cloud.alibaba.study.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.Redisson;
+
+import ms.tool.redis.RedisServer;
+import ms.tool.redis.key.BasePrefix;
+import ms.tool.redis.key.PrefixKey;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.spring.cloud.alibaba.study.entity.MiaoshaGoods;
+
 import org.spring.cloud.alibaba.study.mapper.MiaoshaGoodsMapper;
-import org.spring.cloud.alibaba.study.redis.RedisService;
-import org.spring.cloud.alibaba.study.redis.key.MSGoodsPrefixKey;
+
 import org.spring.cloud.alibaba.study.service.IMiaoShaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -27,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MiaoShaService implements IMiaoShaService {
 
     @Autowired
-    private RedisService redisService;
+    private RedisServer redisService;
 
     @Autowired
     private RedissonClient redissonClient;
@@ -35,7 +36,7 @@ public class MiaoShaService implements IMiaoShaService {
     @Autowired
     private MiaoshaGoodsMapper miaoshaGoodsMapper;
 
-    private final MSGoodsPrefixKey msGoodsPrefixKey = MSGoodsPrefixKey.getInstance();
+    private final PrefixKey msGoodsPrefixKey = new BasePrefix(0, "ms");
 
     private static final String MS_LOCK = "ms:lock";
 

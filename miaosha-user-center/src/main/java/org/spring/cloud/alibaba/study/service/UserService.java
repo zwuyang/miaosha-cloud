@@ -3,6 +3,7 @@ package org.spring.cloud.alibaba.study.service;
 import lombok.extern.slf4j.Slf4j;
 import org.spring.cloud.alibaba.study.common.result.ResultMessage;
 import org.spring.cloud.alibaba.study.common.result.StatusEnum;
+import org.spring.cloud.alibaba.study.common.util.MD5Util;
 import org.spring.cloud.alibaba.study.dto.UserInfoDto;
 import org.spring.cloud.alibaba.study.dto.UserRegisterDto;
 import org.spring.cloud.alibaba.study.entity.MiaoshaUser;
@@ -11,7 +12,6 @@ import org.spring.cloud.alibaba.study.redis.RedisService;
 import org.spring.cloud.alibaba.study.redis.key.UserKeyPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -84,6 +84,32 @@ public class UserService implements IUserService{
         return miaoshaUserMapper.getUsedUserNames();
     }
 
+
+    @Override
+    public ResultMessage login(UserRegisterDto userRegisterDto, HttpServletResponse response) {
+        if (StringUtils.isEmpty(userRegisterDto.getNickName())){
+            return ResultMessage.ERROR("用户名为空");
+        }
+        String password = userRegisterDto.getPassword();
+        String nickname = userRegisterDto.getNickName();
+        MiaoshaUser miaoshaUser = miaoshaUserMapper.getByNickName(nickname);
+        if (miaoshaUser == null){
+            return ResultMessage.ERROR("登录失败 用户名或密码错误");
+        }
+        String dbPass = miaoshaUser.getPassword();
+        String salt = miaoshaUser.getSalt();
+        if (MD5Util.encodeDBPass(password, salt).equals(dbPass)){
+            addCookie(miaoshaUser, response);
+            return ResultMessage.getInstance();
+        }
+        return ResultMessage.ERROR("登录失败 用户名或密码错误");
+    }
+
+    @Override
+    public MiaoshaUser getMiaoShaUserById(String userId) {
+        return miaoshaUserMapper.selectByPrimaryKey(userId);
+    }
+
     private void addCookie(MiaoshaUser user, HttpServletResponse response) {
         if (user == null){
             return;
@@ -93,6 +119,11 @@ public class UserService implements IUserService{
         response.addCookie(cookie);
     }
 
+    /**
+     * 暂时只是放了用户id
+     * @param user
+     * @return
+     */
     private String createToKenWithUserInfo(MiaoshaUser user) {
         String token = "user_token_" + user.getId();
         return token;
@@ -121,4 +152,6 @@ public class UserService implements IUserService{
             return null;
         }
     }
+
+
 }

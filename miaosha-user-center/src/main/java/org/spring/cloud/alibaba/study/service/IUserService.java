@@ -23,4 +23,8 @@ public interface IUserService {
     ResultMessage register(UserRegisterDto userRegisterDto, HttpServletResponse response);
 
     List<String> getAllUsedNames();
+
+    ResultMessage login(UserRegisterDto userRegisterDto, HttpServletResponse response);
+
+    MiaoshaUser getMiaoShaUserById(String userId);
 }

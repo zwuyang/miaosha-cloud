@@ -16,7 +16,6 @@ import redis.clients.jedis.JedisPool;
  * @Date 2020/8/12 14:43
  */
 @Slf4j
-@Service
 public class RedisService {
 
     @Autowired

@@ -1,13 +1,8 @@
 package org.spring.cloud.alibaba.study.config;
 
 import lombok.Data;
-
-import ms.tool.redis.RedisServer;
-import ms.tool.redis.config.PoolConfig;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 
 /**
  * @author yzw
@@ -43,13 +38,8 @@ public class RedisConfiguration {
     @Value("${spring.redis.jedis.pool.min-idle}")
     private int minIdle;
 
-    @Bean
-    public RedisServer redisServer(){
-        PoolConfig config = new PoolConfig(host, port, password, expire,
-                            maxWaitTime, maxActive, maxIdle, minIdle);
-        RedisServer redisServeR = new RedisServer(config);
-        return redisServeR;
-    }
+
+
 
 
 }

@@ -16,5 +16,4 @@ public class UserRegisterDto {
     private String password;
 
 
-
 }
